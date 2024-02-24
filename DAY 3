@@ -1,0 +1,133 @@
+1. Scenario: Analyzing the performance of servers, you want to determine the 25th,
+50th, and 75th percentiles of response times to identify potential bottlenecks.
+PROGRAM
+import numpy as np
+
+# Assuming 'response_times' is a NumPy array or a list containing response time data
+response_times = np.array([10, 15, 18, 20, 25, 28, 30, 32, 35, 40, 45, 50, 55, 60, 65, 70, 75])
+
+# Calculate percentiles
+percentile_25 = np.percentile(response_times, 25)
+percentile_50 = np.percentile(response_times, 50)  # also known as the median
+percentile_75 = np.percentile(response_times, 75)
+
+print(f"25th Percentile: {percentile_25}")
+print(f"50th Percentile (Median): {percentile_50}")
+print(f"75th Percentile: {percentile_75}")
+
+2. Scenario: In a medical study, you have collected data on patients&#39; recovery times after
+a procedure. Calculate the 10th, 50th, and 90th percentiles to understand the
+distribution of recovery times.
+
+PROGRAM 
+
+import numpy as np
+
+# Assuming 'recovery_times' is a NumPy array or a list containing recovery time data
+recovery_times = np.array([5, 8, 10, 12, 15, 18, 20, 22, 25, 28, 30, 35, 40, 45, 50, 55, 60, 65, 70])
+
+# Calculate percentiles
+percentile_10 = np.percentile(recovery_times, 10)
+percentile_50 = np.percentile(recovery_times, 50)  # also known as the median
+percentile_90 = np.percentile(recovery_times, 90)
+
+print(f"10th Percentile: {percentile_10}")
+print(f"50th Percentile (Median): {percentile_50}")
+print(f"90th Percentile: {percentile_90}")
+
+ MEAN MEDIAN MODE
+
+1. You are working with an e-commerce company that has collected data on the purchase
+amounts made by customers over the past month. The dataset includes the purchase
+amounts (in dollars) for each transaction. Utilize measures of central tendency to
+answer the following questions:
+ Calculate the mean (average) purchase amount to understand the typical
+spending behavior of customers.
+ Identify the mode of the purchase amounts to find the most frequently
+occurring purchase amount, helping the company understand popular spending
+levels
+PROGRAM
+
+import numpy as np
+from scipy import stats
+
+# Assuming 'purchase_amounts' is a NumPy array or a list containing purchase amounts data
+purchase_amounts = np.array([20, 30, 25, 40, 30, 25, 35, 30, 45, 20, 30, 40, 35, 30, 25, 40, 30, 35, 30, 40])
+
+# Calculate mean (average)
+mean_purchase_amount = np.mean(purchase_amounts)
+print(f"Mean Purchase Amount: ${mean_purchase_amount:.2f}")
+
+# Identify mode (most frequently occurring purchase amount)
+mode_purchase_amount = stats.mode(purchase_amounts)
+print(f"Mode Purchase Amount: ${mode_purchase_amount.mode[0]} (Frequency: {mode_purchase_amount.count[0]} times)")
+
+
+2. Suppose a hospital tested the age and body fat data for 18 randomly selected adults with the
+following result.
+
+Question:
+ Calculate
+the mean,
+median and standard deviation of age and %fat using Pandas.
+ Draw the boxplots for age and %fat.
+ Draw a scatter plot and a q-q plot based on these two variables
+
+PROGRAM 
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import probplot
+
+# Sample data
+data = {'Age': [25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110],
+        '%Fat': [15, 18, 22, 25, 28, 30, 33, 35, 38, 40, 42, 45, 48, 50, 52, 55, 58, 60]}
+
+# Creating a DataFrame
+df = pd.DataFrame(data)
+
+# Calculate mean, median, and standard deviation
+mean_age = df['Age'].mean()
+median_age = df['Age'].median()
+std_age = df['Age'].std()
+
+mean_fat = df['%Fat'].mean()
+median_fat = df['%Fat'].median()
+std_fat = df['%Fat'].std()
+
+print(f"Age - Mean: {mean_age}, Median: {median_age}, Standard Deviation: {std_age}")
+print(f"%Fat - Mean: {mean_fat}, Median: {median_fat}, Standard Deviation: {std_fat}")
+
+# Draw boxplots
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+sns.boxplot(x=df['Age'])
+plt.title('Boxplot for Age')
+
+plt.subplot(1, 2, 2)
+sns.boxplot(x=df['%Fat'])
+plt.title('Boxplot for %Fat')
+
+plt.show()
+
+# Draw scatter plot
+plt.figure(figsize=(8, 6))
+sns.scatterplot(x='Age', y='%Fat', data=df)
+plt.title('Scatter Plot of Age vs %Fat')
+plt.xlabel('Age')
+plt.ylabel('%Fat')
+plt.show()
+
+# Draw Q-Q plot
+plt.figure(figsize=(8, 6))
+probplot(df['Age'], dist='norm', plot=plt)
+plt.title('Q-Q Plot for Age')
+plt.show()
+
+plt.figure(figsize=(8, 6))
+probplot(df['%Fat'], dist='norm', plot=plt)
+plt.title('Q-Q Plot for %Fat')
+plt.show()
+
+
