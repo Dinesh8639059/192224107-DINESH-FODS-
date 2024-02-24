@@ -1,0 +1,243 @@
+1. A company wants to know if there is a correlation between the number of sales they
+make and the amount of advertising they spend. They have data on the number of
+sales they made each month for the past year, as well as the amount of advertising
+they spent each month. Write a program that will calculate the correlation coefficient
+between sales and advertising, and create a scatter plot of the data.
+
+PROGRAM 
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Example data (replace with your actual data)
+sales = np.array([100, 120, 90, 110, 105, 95, 115, 125, 100, 110])
+advertising_spent = np.array([5000, 6000, 4500, 5500, 5200, 4800, 5800, 6200, 5000, 5500])
+
+# Calculate the correlation coefficient
+correlation_coefficient = np.corrcoef(sales, advertising_spent)[0, 1]
+
+# Create a scatter plot
+plt.scatter(advertising_spent, sales, color='blue', alpha=0.7)
+plt.title('Sales vs Advertising Spending')
+plt.xlabel('Advertising Spending ($)')
+plt.ylabel('Number of Sales')
+plt.grid(True)
+plt.show()
+
+# Output the correlation coefficient
+print(f"Correlation Coefficient: {correlation_coefficient:.4f}")
+
+
+2. A hospital wants to know if there is a correlation between the number of patients who
+smoke and the number of patients who get lung cancer. They have data on the number
+of patients who smoke and the number of patients who get lung cancer each year.
+Write a program that will calculate the correlation coefficient between smoking and
+lung cancer, and create a scatter plot of the data using following mock dataset.
+smoking_patients lung_cancer_patient
+
+s
+
+Year
+
+200 25 2015
+220 30 2016
+240 35 2017
+260 40 2018
+300 55 2019
+
+PROGRAM
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Mock dataset
+years = np.array([2015, 2016, 2017, 2018, 2019])
+smoking_patients = np.array([200, 220, 240, 260, 300])
+lung_cancer_patients = np.array([25, 30, 35, 40, 55])
+
+# Calculate the correlation coefficient
+correlation_coefficient = np.corrcoef(smoking_patients, lung_cancer_patients)[0, 1]
+
+# Create a scatter plot
+plt.scatter(smoking_patients, lung_cancer_patients, color='red', alpha=0.7)
+plt.title('Smoking Patients vs Lung Cancer Patients')
+plt.xlabel('Number of Smoking Patients')
+plt.ylabel('Number of Lung Cancer Patients')
+plt.grid(True)
+plt.show()
+
+# Output the correlation coefficient
+print(f"Correlation Coefficient: {correlation_coefficient:.4f}")
+
+
+3.Consider the age and salary of Individuals in a town. Find the correlation matrix,
+covariance, plot the correlation plot on dataset and visualize giving an overview of
+relationships among data on sample dataset.     age =22,25,39,45,33   salary 40k,45k,150k,200k,120k
+
+PROGRAM
+
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Sample dataset
+age = np.array([22, 25, 39, 45, 33])
+salary = np.array([40000, 45000, 150000, 200000, 120000])
+
+# Calculate correlation matrix
+correlation_matrix = np.corrcoef(age, salary)
+
+# Calculate covariance matrix
+covariance_matrix = np.cov(age, salary)
+
+# Create a correlation plot
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', xticklabels=['Age', 'Salary'], yticklabels=['Age', 'Salary'])
+plt.title('Correlation Plot')
+plt.show()
+
+# Output correlation matrix and covariance matrix
+print("Correlation Matrix:")
+print(correlation_matrix)
+
+print("\nCovariance Matrix:")
+print(covariance_matrix)
+
+
+1. A hospital wants to know the most common diseases among their patients. They have a list
+of all the diseases that their patients have been diagnosed with in the past year, along with the
+number of patients who have been diagnosed with each disease. Write a program that will
+calculate the frequency distribution of diseases and print out the most common disease using
+following dataset
+
+DISEASE_NAM
+E
+
+IAGNOSED_PATIENTS
+
+Common Cold 320
+Diabetes 120
+Bronchitis 100
+Influenza 150
+Kidney Stones 60
+
+PROGRAM 
+import pandas as pd
+
+# Sample dataset
+data = {'Disease_Name': ['Common Cold', 'Diabetes', 'Bronchitis', 'Influenza', 'Kidney Stones'],
+        'Diagnosed_Patients': [320, 120, 100, 150, 60]}
+
+# Create a DataFrame
+df = pd.DataFrame(data)
+
+# Calculate frequency distribution
+frequency_distribution = df.set_index('Disease_Name')['Diagnosed_Patients'].to_dict()
+
+# Find the most common disease
+most_common_disease = max(frequency_distribution, key=frequency_distribution.get)
+
+# Output frequency distribution and most common disease
+print("Frequency Distribution:")
+print(df)
+
+print("\nMost Common Disease:")
+print(f"The most common disease is: {most_common_disease} with {frequency_distribution[most_common_disease]} diagnosed patients.")
+
+
+CONFIDENCE INTERVALS
+
+1. Imagine you are an analyst for a popular online shopping website. Your task is to analyze
+customer reviews and provide insights on the average rating and customer satisfaction level
+for a specific product category. You will use the pandas library to calculate confidence
+intervals to estimate the true population mean rating. You have been provided with following
+dataset.
+product_title product_category star_rating review_headline review_date
+Pineapple
+slicer
+
+Apparel 4
+
+Really good &quot;2013-01-
+14&quot;
+
+Levis Jeans
+Pant
+
+Apparel 5
+
+Perfect Dress &quot;2014-04-
+22&quot;
+
+Wallet Apparel 5
+
+Love it &quot;2015-07-
+28&quot;
+
+Salwar Apparel 5
+
+Awesome &quot;2015-06-
+12&quot;
+
+
+PROGRAM
+import pandas as pd
+import numpy as np
+from scipy import stats
+
+# Sample dataset
+data = {
+    'product_title': ['Pineapple Slicer', 'Levis Jeans Pant', 'Wallet', 'Salwar'],
+    'product_category': ['Apparel', 'Apparel', 'Apparel', 'Apparel'],
+    'star_rating': [4, 5, 5, 5]
+}
+
+# Create a DataFrame
+df = pd.DataFrame(data)
+
+# Calculate the confidence interval for the average rating in the 'Apparel' category
+confidence_level = 0.95  # 95% confidence level
+category = 'Apparel'
+
+# Select ratings for the specific category
+ratings = df[df['product_category'] == category]['star_rating']
+
+# Calculate mean and standard error
+mean_rating = np.mean(ratings)
+std_dev_rating = np.std(ratings, ddof=1)  # ddof=1 for sample standard deviation
+sample_size = len(ratings)
+standard_error = stats.sem(ratings)
+
+# Calculate confidence interval
+confidence_interval = stats.t.interval(confidence_level, df=sample_size-1, loc=mean_rating, scale=standard_error)
+
+# Output
+print(f"Category: {category}")
+print(f"Mean Rating: {mean_rating:.2f}")
+print(f"Confidence Interval: {confidence_interval}")
+
+
+2. A weather station wants to know the most common types of weather in their area. They
+have a list of all the weather conditions that have occurred in the past year, along with the
+number of times each weather condition has occurred. Write a program that will calculate the
+frequency distribution of weather conditions and print out the most common weather type.
+
+
+import pandas as pd
+
+# Sample dataset
+data = {'Weather_Condition': ['Sunny', 'Rainy', 'Cloudy', 'Sunny', 'Rainy', 'Sunny', 'Cloudy', 'Cloudy', 'Rainy'],
+        'Occurrence_Count': [20, 15, 30, 25, 10, 22, 28, 32, 18]}
+
+# Create a DataFrame
+df = pd.DataFrame(data)
+
+# Calculate frequency distribution
+frequency_distribution = df.set_index('Weather_Condition')['Occurrence_Count'].to_dict()
+
+# Find the most common weather type
+most_common_weather = max(frequency_distribution, key=frequency_distribution.get)
+
+# Output frequency distribution and most common weather type
+print("Frequency Distribution:")
+print(df)
+
+print("\nMost Common Weather Type:")
+print(f"The most common weather type is: {most_common_weather} with {frequency_distribution[most_common_weather]} occurrences.")
