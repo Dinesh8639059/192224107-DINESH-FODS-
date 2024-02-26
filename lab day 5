@@ -1,0 +1,107 @@
+1. Scenario: You are working on a project that involves analysing customer reviews for a
+product. You have a dataset containing customer reviews, and your task is to develop a
+Python program that calculates the frequency distribution of words in the reviews.
+Question: Develop a Python program to calculate the frequency distribution of words in the
+customer reviews dataset?
+PROGRAM
+import nltk
+from nltk import FreqDist
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+
+nltk.download('punkt')
+nltk.download('stopwords')
+
+def calculate_word_frequency(reviews):
+    # Tokenize and lowercase the words
+    words = [word.lower() for review in reviews for word in word_tokenize(review) if word.isalpha()]
+
+    # Remove stopwords
+    stop_words = set(stopwords.words('english'))
+    words = [word for word in words if word not in stop_words]
+
+    # Calculate word frequency distribution
+    freq_dist = FreqDist(words)
+
+    return freq_dist
+
+# Sample dataset of customer reviews
+customer_reviews = [
+    "I love this product! It's amazing.",
+    "Not satisfied with the quality.",
+    "Great value for the price.",
+    "The product is terrible. Do not buy.",
+    "Excellent customer service!"
+]
+
+# Calculate word frequency distribution
+frequency_distribution = calculate_word_frequency(customer_reviews)
+
+# Display the top N words and their frequencies
+top_words = 10
+print(f"Top {top_words} words and their frequencies:")
+for word, frequency in frequency_distribution.most_common(top_words):
+    print(f"{word}: {frequency}")
+
+
+
+
+2. Scenario: You are a data analyst working for a marketing research company. Your team
+has collected a large dataset containing customer feedback from various social media
+platforms. The dataset consists of thousands of text entries, and your task is to develop a
+Python program to analyze the frequency distribution of words in this dataset. Your program
+should be able to perform the following tasks:
+ Load the dataset from a CSV file (data.csv) containing a single column named
+&quot;feedback&quot; with each row representing a customer comment.
+ Preprocess the text data by removing punctuation, converting all text to lowercase,
+and eliminating any stop words (common words like &quot;the,&quot; &quot;and,&quot; &quot;is,&quot; etc. that don&#39;t
+carry significant meaning).
+ Calculate the frequency distribution of words in the preprocessed dataset.
+ Display the top N most frequent words and their corresponding frequencies, where N
+is provided as user input.
+ Plot a bar graph to visualize the top N most frequent words and their frequencies.
+Question: Create a Python program that fulfills these requirements and helps your team gain
+insights from the customer feedback data.
+
+PROGRAM
+
+import pandas as pd
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.probability import FreqDist
+import string
+import matplotlib.pyplot as plt
+
+nltk.download('punkt')
+nltk.download('stopwords')
+
+def load_dataset(file_path):
+    # Load dataset from CSV
+    df = pd.read_csv(file_path)
+    return df['feedback']
+
+def preprocess_text(text):
+    # Tokenize, remove punctuation, convert to lowercase, and eliminate stop words
+    tokens = word_tokenize(text)
+    tokens = [word.lower() for word in tokens if word.isalpha()]
+    stop_words = set(stopwords.words('english'))
+    tokens = [word for word in tokens if word not in stop_words]
+    return tokens
+
+def calculate_word_frequency(tokens):
+    # Calculate word frequency distribution
+    freq_dist = FreqDist(tokens)
+    return freq_dist
+
+def plot_word_frequency(freq_dist, top_n):
+    # Display the top N most frequent words and their frequencies
+    print(f"Top {top_n} words and their frequencies:")
+    for word, frequency in freq_dist.most_common(top_n):
+        print(f"{word}: {frequency}")
+
+    # Plot a bar graph
+    freq_dist.plot(top_n, cumulative=False)
+    plt.title('Top Words Frequency Distribution')
+    plt.xlabel('Words')
+    plt.ylabel('Frequency
